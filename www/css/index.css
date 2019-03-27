@@ -113,3 +113,19 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
+
+.show{
+    margin-top: 20px;
+    font: 100% sans-serif;
+}
+.btn{
+    background-image:url(icon_battery2.png);
+    background-repeat:no-repeat;
+    height:70px;
+    width:100px;
+    background-position:center;
+}
+
+#audio{
+    display: none
+}

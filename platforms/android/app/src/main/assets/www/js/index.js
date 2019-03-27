@@ -19,7 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        document.addEventListener('click', this.onDeviceReady.bind(this), false);
     },
 
     // deviceready Event Handler
@@ -28,6 +28,9 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+	// Agrego el detector de eventos:
+	window.addEventListener("batterystatus", onBatteryStatus, false); 
+	document.getElementById("btn1").addEventListener("click",test);
     },
 
     // Update DOM on a Received Event
@@ -40,7 +43,25 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    }
+    }    
 };
 
 app.initialize();
+
+//Llama a la función "onBatteryStatus" al pulsar el botón
+function test(){
+   window.addEventListener("batterystatus", onBatteryStatus, false);
+}
+
+// Función que devuelve la llamada
+function onBatteryStatus(info) {
+
+   //Salta una alerta mostrando el nivel de batería y si está conectado
+   alert("ESTADO BATERIA: \n Nivel: " + info.level + " Conectado: " + info.isPlugged);
+
+   //Si se desconecta el cargador salta una alarma
+   if(info.isPlugged==false) {
+	var audio = document.getElementById("audio");
+	audio.play();
+   } 
+}

@@ -19,18 +19,20 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        document.addEventListener('click', this.onDeviceReady.bind(this), false);
     },
 
     // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
+
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+	
+    // Detector de eventos:
+	window.addEventListener("batterystatus", onBatteryStatus, false); 
+	document.getElementById("boton").addEventListener("click",test);
     },
 
-    // Update DOM on a Received Event
+    
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
@@ -40,18 +42,27 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
-    }
+    }    
 };
 
 app.initialize();
 
-
-
+//Llama a la función "onBatteryStatus"
 function test(){
-    alert("Nivel: "+info.level + "Conectado: "+info.isPlugged);
-
-    if(info.isPlugged==false){
-        var audio = document.getElementById("audio");
-        audio.play();
-    }
+   window.addEventListener("batterystatus", onBatteryStatus, false);
 }
+
+// Función que muestra el nivel de la bateria y el estado del dispositivo
+function onBatteryStatus(info) {
+
+   //Salta una alerta mostrando el nivel de batería y si está conectado
+   alert("ESTADO DE LA BATERIA:\nNivel: " + info.level + " Conectado: " + info.isPlugged);
+
+   //Si se desconecta el cargador salta una alarma
+   if(info.isPlugged==false) {
+	var audio = document.getElementById("audio");
+	audio.play();
+   } 
+}
+
+
